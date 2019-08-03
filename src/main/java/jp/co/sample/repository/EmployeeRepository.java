@@ -13,9 +13,9 @@ import org.springframework.stereotype.Repository;
 import jp.co.sample.domain.Employee;
 
 /**
- * employeesテーブルを操作するリポジトリ
+ * employeesテーブルを操作するリポジトリ.
  * 
- * @author JURI
+ * @author juri.saito
  *
  */
 @Repository
@@ -46,12 +46,12 @@ public class EmployeeRepository {
 	};
 	
 	/**
-	 * 従業員一覧情報を入社日順で取得する。
+	 * 従業員一覧情報を入社日順で取得する.
 	 * 
-	 * @return　従業員が存在しない場合しない場合はサイズ0件の従業員一覧を返す
+	 * @return　従業員一覧　(従業員が存在しない場合はサイズ0件の従業員一覧を返す)
 	 */
 	public List<Employee> findAll(){
-		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephon,salary,characteristics,dependents_count FROM employees ORDER BY hire_date";
+		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees ORDER BY hire_date";
 		List<Employee> employeeList = template.query(sql, EMPLOYEE_ROW_MAPPER);
 		
 		return employeeList;
@@ -60,13 +60,13 @@ public class EmployeeRepository {
 	/**
 	 * 主キーから従業員情報を取得する
 	 * 
-	 * @param id
+	 * @param id 主キー
 	 * @return 検索された従業員情報（従業員が存在しない場合はSpringが自動的に例外が発生します）
 	 */
 	public Employee load(Integer id) {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 
-		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephon,salary,characteristics,dependents_count FROM employees WHERE id=:id";
+		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees WHERE id=:id";
 		
 		Employee employee = template.queryForObject(sql, param, EMPLOYEE_ROW_MAPPER);
 		
@@ -77,7 +77,7 @@ public class EmployeeRepository {
 	/**
 	 * 従業員情報を変更する
 	 * 
-	 * @param employee （今回は従業員情報の扶養人数だけを更新できるようなSQLを発行する）
+	 * @param employee 従業員情報　（今回は従業員情報の扶養人数だけを更新できるようなSQLを発行する）
 	 */
 	public void update(Employee employee) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(employee);

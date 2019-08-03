@@ -12,9 +12,9 @@ import org.springframework.stereotype.Repository;
 import jp.co.sample.domain.Administrator;
 
 /**
- * administratorsテーブルを操作するリポジトリ
+ * administratorsテーブルを操作するリポジトリ.
  * 
- * @author JURI
+ * @author juri.saito
  *
  */
 @Repository
@@ -37,28 +37,28 @@ public class AdministratorRepository {
 	
 	
 	/**
-	 * 管理者情報を挿入する
+	 * 管理者情報を挿入する.
 	 * 
-	 * @param administrator
+	 * @param administrator 管理者情報
 	 * 
 	 */
 	public void insert(Administrator administrator) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(administrator);
 		
-		String sql = "INSERT INTO administrators (name,mail_address,password) + VALUES(:name,:mailAddress,:password)";
+		String sql = "INSERT INTO administrators (name,mail_address,password) VALUES(:name,:mailAddress,:password)";
 		template.update(sql, param);
 	}
 	
 	/**
-	 * メールアドレスとパスワードから管理者情報を取得する。
+	 * メールアドレスとパスワードから管理者情報を取得する.
 	 * 
-	 * @param mailAddress
-	 * @param password
-	 * @return administrator　存在しない場合はnullを返す
+	 * @param mailAddress　メールアドレス
+	 * @param password　パスワード
+	 * @return administrator　管理者情報　(もし存在しない場合はnullを返す)
 	 * 
 	 */
 	public Administrator findByMailAddressAndPassword(String mailAddress, String password) {
-		Administrator administrator = new Administrator();
+		// Administrator administrator = new Administrator();
 		
 		String sql = "SELECT id,name,mailAddress,password FROM administrators";
 		List<Administrator> administratorList = template.query(sql, ADMINISTRATOR_ROW_MAPPER);
@@ -66,7 +66,7 @@ public class AdministratorRepository {
 		if(administratorList.size() == 0) {
 			return null;
 		}else {
-			administrator = administratorList.get(0);
+			Administrator administrator = administratorList.get(0);
 			return administrator; 
 		}
 	}
