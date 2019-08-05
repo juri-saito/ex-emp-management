@@ -26,6 +26,7 @@ public class EmployeeController {
 	 * @param model リクエストスコープ
 	 * @return 従業員一覧画面
 	 */
+	@RequestMapping("/showList")
 	public String showList(Model model) {
 		List<Employee> List = employeeService.showList();
 		model.addAttribute("employeeList", List);
