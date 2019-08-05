@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.sample.domain.Employee;
+import jp.co.sample.form.UpdateEmployeeForm;
 import jp.co.sample.service.EmployeeService;
 
 /**
@@ -32,5 +34,28 @@ public class EmployeeController {
 		model.addAttribute("employeeList", List);
 		
 		return "employee/list.html";
+	}
+	
+	/**
+	 * 従業員情報更新時に使用するフォームオブジェクトをModelオブジェクト(リクエストスコープ)に格納.
+	 * @return　従業員情報更新時に使用するフォームオブジェクト
+	 */
+	@ModelAttribute
+	public UpdateEmployeeForm setUpdateEmployeeForm() {
+		UpdateEmployeeForm employeeForm = new UpdateEmployeeForm();
+		return employeeForm;
+	}
+
+	/**
+	 * リクエストスコープに従業員情報を格納して従業員詳細画面へフォワード.
+	 * @param id 従業員ID
+	 * @param model　リクエストスコープ
+	 * @return　従業員詳細画面
+	 */
+	@RequestMapping("/showDetail")
+	public String showDetail(String id, Model model) {
+		Employee employee = employeeService.showDetail(Integer.parseInt(id));
+		model.addAttribute("employee", employee);
+		return "employee/detail.html";
 	}
 }
