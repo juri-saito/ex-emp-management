@@ -51,7 +51,7 @@ public class AdministratorController {
 	}
 	
 	/**
-	 * 管理者登録画面へフォワード
+	 * 管理者登録画面へフォワード.
 	 * @return　管理者登録画面
 	 */
 	@RequestMapping("/toInsert")
